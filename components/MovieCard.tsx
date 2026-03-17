@@ -1,13 +1,21 @@
-"use client"
+"use client";
+import { useState } from "react";
+import ReviewModal from "./ReviewModal";
 
 interface MovieCardProps {
-  id: number
-  title: string
-  posterPath: string
-  rating: number
+  id: number;
+  title: string;
+  posterPath: string;
+  rating: number;
 }
 
-export default function MovieCard({ id, title, posterPath, rating }: MovieCardProps) {
+export default function MovieCard({
+  id,
+  title,
+  posterPath,
+  rating,
+}: MovieCardProps) {
+  const [showReview, setShowReview] = useState(false);
 
   async function handleSave() {
     const response = await fetch("/api/watchlist", {
@@ -17,10 +25,10 @@ export default function MovieCard({ id, title, posterPath, rating }: MovieCardPr
         movieId: id,
         movieTitle: title,
         posterPath: posterPath,
-      })
-    })
+      }),
+    });
     if (response.ok) {
-      alert("Saved to watchlist!")
+      alert("Saved to watchlist!");
     }
   }
 
@@ -39,7 +47,21 @@ export default function MovieCard({ id, title, posterPath, rating }: MovieCardPr
       >
         + Watchlist
       </button>
+      <button
+        onClick={() => setShowReview(true)}
+        className="bg-blue-600 hover:bg-blue-700 text-white text-sm py-1 rounded"
+      >
+        Review
+      </button>
 
+      {showReview && (
+        <ReviewModal
+        movieId={id}
+        movieTitle={title}
+        posterPath={posterPath}
+        onClose={() => setShowReview(false)}
+        />
+      )}      
     </div>
-  )
+  );
 }
