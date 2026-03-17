@@ -16,7 +16,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   watchlist     WatchlistItem[]
-  ratings       Rating[]
+  reviews   Review[]
 }
 
 model Account {
@@ -55,11 +55,16 @@ model WatchlistItem {
   user       User     @relation(fields: [userId], references: [id])
 }
 
-model Rating {
+model Review {
   id        String   @id @default(cuid())
   userId    String
   movieId   Int
+  movieTitle String
+  posterPath String?
+  title     String
+  body      String
   rating    Int
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+
+  user User @relation(fields: [userId], references: [id])
 }
