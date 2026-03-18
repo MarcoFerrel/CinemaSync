@@ -23,6 +23,9 @@
 # misc
 .DS_Store
 *.pem
+.vscode
+.gitignore
+.postcss.config.mjs
 
 # debug
 npm-debug.log*
